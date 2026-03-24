@@ -3,15 +3,15 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 023371594126.dkr.ecr.ap-south-1.amazonaws.com
   build:
     commands:
       - docker build -t 2048-game .
-      - docker tag 2048-game:latest $ECR_URI:latest
+      - docker tag 2048-game:latest 023371594126.dkr.ecr.ap-south-1.amazonaws.com/game/2048_game:latest
   post_build:
     commands:
-      - docker push $ECR_URI:latest
-      - printf '[{"name":"2048-game","imageUri":"%s"}]' $ECR_URI:latest > imagedefinitions.json
+      - docker push 023371594126.dkr.ecr.ap-south-1.amazonaws.com/game/2048_game:latest
+      - printf '[{"name":"2048-game","imageUri":"%s"}]' 023371594126.dkr.ecr.ap-south-1.amazonaws.com/game/2048_game:latest > imagedefinitions.json
 
 artifacts:
   files:
