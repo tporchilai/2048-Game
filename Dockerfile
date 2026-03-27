@@ -1,4 +1,3 @@
 FROM nginx:alpine
 COPY 2048.html /usr/share/nginx/html/index.html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]FROM nginx:alpine  COPY 2048.html /usr/share/nginx/html/index.html  EXPOSE 80  CMD ["nginx", "-g", "daemon off;"] 
