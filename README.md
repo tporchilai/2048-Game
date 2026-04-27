@@ -1,12 +1,6 @@
-# 🎮 2048 Game — Production CI/CD Pipeline on AWS
+#  2048 Game — Production CI/CD Pipeline on AWS
 
-<div align="center">
 
-![2048 Game](https://img.shields.io/badge/Game-2048-yellow?style=for-the-badge&logo=javascript)
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazon-aws)
-![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker)
-![CI/CD](https://img.shields.io/badge/CI%2FCD-Pipeline-green?style=for-the-badge&logo=github-actions)
-![Status](https://img.shields.io/badge/Status-Live-brightgreen?style=for-the-badge)
 
 **A fully automated, containerized deployment of the classic 2048 game using a production-grade AWS CI/CD pipeline.**
 
@@ -16,29 +10,27 @@
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 This project demonstrates a **real-world DevOps workflow** where a simple web game is containerized using Docker and deployed automatically to the cloud every time code is pushed to GitHub. The entire deployment process — from building the Docker image to running it in production — is **fully automated** with zero manual intervention.
 
-> **Why this project matters:** Most developers can write code, but DevOps engineers know how to ship it reliably, repeatedly, and at scale. This pipeline represents the exact workflow used by modern software companies to deploy applications to production.
-
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         AWS Cloud                               │
 │                                                                 │
-│   ┌──────────┐    ┌──────────────┐    ┌─────┐    ┌─────────┐  │
-│   │  GitHub  │───▶│ CodePipeline │───▶│ ECR │───▶│   ECS   │  │
-│   │   Repo   │    │              │    │     │    │ Fargate  │  │
-│   └──────────┘    └──────┬───────┘    └─────┘    └─────────┘  │
+│   ┌──────────┐    ┌──────────────┐    ┌─────┐    ┌─────────┐    │
+│   │  GitHub  │──▶│ CodePipeline │───▶│ ECR │──▶│   ECS   │    │ 
+│   │   Repo   │    │              │    │     │    │ Fargate │    │
+│   └──────────┘    └──────┬───────┘    └─────┘    └─────────┘    │
 │                          │                                      │
-│                   ┌──────▼───────┐                             │
-│                   │  CodeBuild   │                             │
-│                   │ (Docker Build)│                            │
-│                   └──────────────┘                             │
+│                   ┌──────▼───────┐                              │
+│                   │  CodeBuild   │                              │
+│                   │ (Docker Build)│                             │ 
+│                   └──────────────┘                              │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -54,7 +46,7 @@ This project demonstrates a **real-world DevOps workflow** where a simple web ga
 
 ---
 
-## 🚀 CI/CD Pipeline Flow
+##  CI/CD Pipeline Flow
 
 ```
 Developer pushes code to GitHub
@@ -90,35 +82,7 @@ Developer pushes code to GitHub
 
 ---
 
-## 🛠️ Technologies Used & Why
-
-### 🐳 Docker
-**Why over traditional hosting?**
-Docker packages the application and all its dependencies into a single container image. This eliminates the classic *"it works on my machine"* problem. Whether running locally, on a test server, or in production — the container behaves identically everywhere.
-
-### ☁️ AWS CodePipeline
-**Why over manual deployment?**
-CodePipeline is the glue that connects GitHub → CodeBuild → ECS. Without it, every deployment would require manually running build commands and updating ECS services. CodePipeline eliminates human error and makes every deployment consistent, auditable, and repeatable.
-
-### 🔨 AWS CodeBuild
-**Why over a local build machine?**
-CodeBuild is a fully managed build service that runs in the cloud. There is no need to maintain a dedicated Jenkins server or build machine. It scales automatically, only charges for build minutes used, and supports Docker builds natively with privileged mode.
-
-### 📦 Amazon ECR (Elastic Container Registry)
-**Why over Docker Hub?**
-ECR is AWS's private Docker registry that integrates seamlessly with ECS and CodeBuild. Unlike Docker Hub, ECR images stay within the AWS network — meaning faster pull times, no rate limits, and better security with IAM-based access control.
-
-### 🚢 Amazon ECS Fargate
-**Why over EC2 instances?**
-ECS Fargate is **serverless container orchestration** — you define what to run, and AWS handles the underlying infrastructure. There are no servers to manage, patch, or scale manually. Fargate automatically provisions the right amount of compute for the container and charges only for the exact resources used.
-
-### 🌐 NGINX (inside Docker)
-**Why NGINX over plain file serving?**
-NGINX is a high-performance web server that efficiently serves static files like HTML, CSS, and JavaScript. The `nginx:alpine` base image is extremely lightweight (~5MB), making the Docker image small, fast to build, and quick to deploy.
-
----
-
-## 📁 Project Structure
+##  Project Structure
 
 ```
 2048-Game/
@@ -131,7 +95,7 @@ NGINX is a high-performance web server that efficiently serves static files like
 
 ---
 
-## 🐳 Dockerfile Explained
+## Dockerfile Explained
 
 ```dockerfile
 FROM nginx:alpine
@@ -147,7 +111,7 @@ EXPOSE 80
 
 ---
 
-## ⚙️ buildspec.yml Explained
+##  buildspec.yml Explained
 
 ```yaml
 version: 0.2
@@ -180,7 +144,7 @@ artifacts:
 
 ---
 
-## ⚙️ Setup Guide
+##  Setup Guide
 
 ### Prerequisites
 - AWS Account with appropriate IAM permissions
@@ -231,11 +195,11 @@ git commit -m "Initial deployment"
 git push origin master
 ```
 
-The pipeline will automatically build and deploy! 🚀
+The pipeline will automatically build and deploy! 
 
 ---
 
-## 🔄 How Auto-Deploy Works
+##  How Auto-Deploy Works
 
 ```bash
 # Make any change to the game
@@ -251,24 +215,13 @@ git push origin master
 # 2. Builds new Docker image
 # 3. Pushes to ECR
 # 4. Deploys to ECS
-# 5. Game updates live! ✅
+# 5. Game updates live! 
 ```
 
 ---
-
-## 📊 AWS Services Cost Breakdown
-
-| Service | Cost | Notes |
-|---------|------|-------|
-| CodePipeline | ~$1/month | Per active pipeline |
-| CodeBuild | ~$0.005/min | Only during builds |
-| ECR | ~$0.10/GB | Image storage |
-| ECS Fargate | ~$0.04/hour | Per vCPU per hour |
-| **Total** | **~$5-10/month** | For this project size |
-
 ---
 
-## 🎯 Key DevOps Concepts Demonstrated
+##  Key DevOps Concepts Demonstrated
 
 - ✅ **Infrastructure as Code** — All AWS resources defined and reproducible
 - ✅ **Containerization** — App packaged in Docker for consistency
@@ -281,7 +234,11 @@ git push origin master
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
+
+
+<img width="760" height="649" alt="game success" src="https://github.com/user-attachments/assets/8090d5ac-733e-4325-b330-5309ee82d11a" />
+
 
 | Pipeline Success | Live Game |
 |-----------------|-----------|
@@ -289,23 +246,16 @@ git push origin master
 
 ---
 
-## 👤 Author
+## Author
 
 **tporchilai**
 - GitHub: [@tporchilai](https://github.com/tporchilai)
 
 ---
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<div align="center">
-
-**⭐ If this project helped you learn DevOps, please give it a star! ⭐**
-
-Built with ❤️ using AWS, Docker, and a lot of debugging 🐛
-
-</div>
